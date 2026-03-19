@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phoneNumber  String?  // E.164 format: +1234567890
+  notifySms    Boolean  @default(true)
+  notifyEmail  Boolean  @default(true)
+  notifyWhatsApp Boolean @default(false)
+  role         String   @default("USER")
+  createdAt    DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  bookings       Booking[]
+  flightBookings FlightBooking[]
+  hotelBookings   HotelBooking[]
+  carBookings     CarBooking[]
+  customerProfile CustomerProfile?
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  location    String
+  startAt     DateTime
+  endAt       DateTime?
+  totalSeats  Int
+  priceCents  Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  event       Event    @relation(fields: [eventId], references: [id])
+  eventId     String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  quantity    Int
+  totalCents  Int
+  status      String       @default("PENDING")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model FlightBooking {
+  id                    String   @id @default(cuid())
+  user                  User?    @relation(fields: [userId], references: [id])
+  userId                String?
+  airline               String
+  flightNumber          String
+  origin                String
+  destination           String
+  departureTime         DateTime
+  arrivalTime           DateTime
+  priceCents            Int
+  pnr                   String?
+  cabin                 String   @default("ECONOMY")
+  passengers            Int      @default(1)
+  passengerName         String?
+  passengerEmail        String?
+  passengerPassport     String?
+  stripeSessionId       String?  @unique
+  stripePaymentIntentId String?
+  status                String   @default("PENDING")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model HotelBooking {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  hotelName       String
+  city            String
+  checkInDate     DateTime
+  checkOutDate    DateTime
+  roomType        String
+  priceCents      Int
+  confirmationId  String?
+  status          String   @default("CONFIRMED")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model CarBooking {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  provider        String   // e.g. Hertz, Avis
+  pickupLocation  String
+  dropoffLocation String
+  pickupDate      DateTime
+  dropoffDate     DateTime
+  carClass        String
+  priceCents      Int
+  confirmationId  String?
+  status          String   @default("CONFIRMED")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model CustomerProfile {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String   @unique
+  passportNumber  String?
+  frequentFlyer   String?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Lead {
+  id              String   @id @default(cuid())
+  name            String
+  email           String
+  phone           String
+  contactMethod   String   @default("WhatsApp") // WhatsApp, SMS, Calls
+  targetDestination String?
+  targetPrice     Int?
+  assignedAgentId String?
+  source          String   @default("WEBSITE")
+  status          String   @default("NEW")
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model MessageLog {
+  id              String   @id @default(cuid())
+  senderId        String?
+  recipientEmail  String
+  type            String
+  subject         String?
+  content         String
+  createdAt       DateTime @default(now())
+}
+
+
+

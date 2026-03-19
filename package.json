@@ -1,0 +1,35 @@
+{
+  "name": "personal-ticketing-cms",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "@stripe/stripe-js": "^8.10.0",
+    "amadeus": "^11.0.0",
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "stripe": "^20.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.2",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8.4.35",
+    "prisma": "^5.0.0",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.3.3"
+  }
+}
