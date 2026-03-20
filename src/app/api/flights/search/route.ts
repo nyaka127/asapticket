@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { findCity } from '@/lib/geo';
 import { amadeus, hasAmadeusKeys } from '@/lib/amadeus';
 
 export async function GET(request: Request) {
@@ -9,8 +10,13 @@ export async function GET(request: Request) {
   const returnDate = searchParams.get('returnDate');
   const tripType = searchParams.get('tripType') || 'oneway';
 
-  const uOrigin = origin.toUpperCase();
-  const uDest = destination.toUpperCase();
+  // Use the new findCity function to resolve flexible text inputs to IATA codes.
+  const originLocation = findCity(origin);
+  const destinationLocation = findCity(destination);
+
+  // Fallback to uppercase input if no specific city is found (for 3-letter codes)
+  const uOrigin = originLocation?.code || origin.toUpperCase();
+  const uDest = destinationLocation?.code || destination.toUpperCase();
 
   if (!hasAmadeusKeys) {
     const airlinesList = [
@@ -19,22 +25,32 @@ export async function GET(request: Request) {
       { name: 'Lufthansa', code: 'LH', base: 780, alliance: 'Star Alliance', logo: '/assets/united_flight.png' },
       { name: 'Qatar Airways', code: 'QR', base: 890, alliance: 'Oneworld', logo: '/assets/united_flight.png' },
       { name: 'Kenya Airways', code: 'KQ', base: 820, alliance: 'SkyTeam', logo: '/assets/united_flight.png' },
+      // Extended Regional Carriers for India, Pakistan, Americas
+      { name: 'Air India', code: 'AI', base: 700, alliance: 'Star Alliance', logo: '/assets/united_flight.png' },
+      { name: 'Pakistan Int. Airlines', code: 'PK', base: 650, alliance: 'Independent', logo: '/assets/united_flight.png' },
+      { name: 'Air Canada', code: 'AC', base: 760, alliance: 'Star Alliance', logo: '/assets/united_flight.png' },
+      { name: 'Aeromexico', code: 'AM', base: 710, alliance: 'SkyTeam', logo: '/assets/united_flight.png' },
+      { name: 'British Airways', code: 'BA', base: 880, alliance: 'Oneworld', logo: '/assets/united_flight.png' },
+      { name: 'IndiGo', code: '6E', base: 550, alliance: 'Low Cost', logo: '/assets/united_flight.png' },
+      { name: 'WestJet', code: 'WS', base: 590, alliance: 'Independent', logo: '/assets/united_flight.png' },
+      { name: 'Turkish Airlines', code: 'TK', base: 790, alliance: 'Star Alliance', logo: '/assets/united_flight.png' },
     ];
 
     const { getDistanceBetweenCodes, MAJOR_CITIES } = await import('@/lib/geo');
     const distance = getDistanceBetweenCodes(uOrigin, uDest);
-    
+
     // Regional Pricing Logic
-    const originCity = MAJOR_CITIES[uOrigin];
-    const destCity = MAJOR_CITIES[uDest];
-    const isSameRegion = originCity && destCity && originCity.region === destCity.region;
-    
+    const isSameRegion = originLocation && destinationLocation && originLocation.region === destinationLocation.region;
+    const isSameCountry = originLocation && destinationLocation && originLocation.country === destinationLocation.country;
+
     // Regional Discount Factor (flights in same region are cheaper per km)
-    const regionalFactor = isSameRegion ? 0.80 : 1.0;
-    
+    // Make same-country flights even cheaper.
+    const regionalFactor = isSameCountry ? 0.65 : (isSameRegion ? 0.80 : 1.0);
+
     // Logic: Distance-based base, then multiply if roundtrip
-    const singleLegBase = Math.max(90, (distance * 0.11 * regionalFactor) + 80);
-    const distanceBasePrice = returnDate ? (singleLegBase * 1.85) : singleLegBase;
+    // Lowered base calculation for "Wholesale" pricing visual
+    const singleLegBase = Math.max(50, (distance * 0.05 * regionalFactor) + 30);
+    const distanceBasePrice = returnDate ? (singleLegBase * 1.80) : singleLegBase;
 
     const mockData = airlinesList.map((air, idx) => {
       // Small variation in price based on airline prestige
@@ -44,14 +60,14 @@ export async function GET(request: Request) {
 
       // Regional stops: Intra-region flights usually non-stop or 1 stop
       const stops = isSameRegion ? (idx < 2 ? 0 : 1) : (idx % 3 === 0 ? 0 : idx % 3 === 1 ? 1 : 2);
-      
+
       const layovers = stops > 0 ? [
         { iataCode: isSameRegion ? 'ADD' : 'LHR', city: isSameRegion ? 'Addis' : 'London', duration: '1h 30m' },
         ...(stops > 1 ? [{ iataCode: 'DXB', city: 'Dubai', duration: '2h 45m' }] : [])
       ] : [];
 
       // Calculate total duration roughly (e.g. 11h 45m)
-      const totalH = isSameRegion ? Math.max(1, Math.round(distance/800)) : Math.max(6, Math.round(distance/750) + (stops * 2));
+      const totalH = isSameRegion ? Math.max(1, Math.round(distance / 800)) : Math.max(6, Math.round(distance / 750) + (stops * 2));
       const totalM = 45;
 
       return {
@@ -65,14 +81,14 @@ export async function GET(request: Request) {
         layovers: stops,
         layoverDetails: layovers,
         totalTravelTime: `${totalH}h ${totalM}m`,
-        departure: { iataCode: uOrigin.substring(0,3), at: `${departureDate}T${depH}:00:00` },
-        arrival: { iataCode: uDest.substring(0,3), at: `${departureDate}T${arrH}:30:00` },
+        departure: { iataCode: uOrigin.substring(0, 3), at: `${departureDate}T${depH}:00:00` },
+        arrival: { iataCode: uDest.substring(0, 3), at: `${departureDate}T${arrH}:30:00` },
         isRoundTrip: !!returnDate,
         returnDate: returnDate,
         returnLeg: returnDate ? {
-            departure: { iataCode: uDest.substring(0,3), at: `${returnDate}T${idx % 2 === 0 ? '09' : '17'}:00:00` },
-            arrival: { iataCode: uOrigin.substring(0,3), at: `${returnDate}T${idx % 2 === 0 ? '16' : '01'}:30:00` },
-            layovers: stops > 1 ? 1 : 0
+          departure: { iataCode: uDest.substring(0, 3), at: `${returnDate}T${idx % 2 === 0 ? '09' : '17'}:00:00` },
+          arrival: { iataCode: uOrigin.substring(0, 3), at: `${returnDate}T${idx % 2 === 0 ? '16' : '01'}:30:00` },
+          layovers: stops > 1 ? 1 : 0
         } : null
       };
     });
@@ -104,7 +120,7 @@ export async function GET(request: Request) {
     };
 
     if (returnDate && tripType === 'roundtrip') {
-        params.returnDate = returnDate;
+      params.returnDate = returnDate;
     }
 
     const response = await amadeus.shopping.flightOffersSearch.get(params);

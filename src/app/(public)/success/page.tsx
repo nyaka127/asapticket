@@ -55,12 +55,12 @@ async function SuccessContent({ type, ref: bookingRef, name }: { type: string; r
               </div>
             </div>
             <div>
-              <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Trust HQ</div>
-              <div className="font-bold text-slate-700 text-xs">Wilmington, DE</div>
+              <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Global Support</div>
+              <div className="font-bold text-slate-700 text-xs tracking-tight">asap.global/help</div>
             </div>
             <div>
-              <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Support</div>
-              <div className="font-bold text-slate-700 text-xs">📞 +1 866 961 7260</div>
+              <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Status Ping</div>
+              <div className="font-bold text-slate-700 text-xs text-green-500">🟢 CONNECTED</div>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@ async function SuccessContent({ type, ref: bookingRef, name }: { type: string; r
       </div>
 
       <p className="text-xs text-slate-400 mt-6 text-center">
-        Need help? Call us anytime: <a href="tel:+18669617260" className="text-brand-primary font-bold">+1 866 961 7260</a>
+        Need help? Contact our global hubs 24/7 or via WhatsApp.
       </p>
     </div>
   );

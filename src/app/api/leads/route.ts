@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
@@ -24,8 +22,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, leadId: lead.id });
   } catch (error) {
     console.error('Lead Capture Error:', error);
-    // Return mock success if DB fails (for demo/mock purposes)
-    return NextResponse.json({ success: true, leadId: 'MOCK_' + Date.now() });
+    // Returning a proper error is crucial for debugging. The previous implementation
+    // would hide database errors and make it seem like the lead was saved.
+    const message = error instanceof Error ? error.message : 'An unknown error occurred.';
+    return NextResponse.json({ success: false, error: 'Failed to create lead.', details: message }, { status: 500 });
   }
 }
 

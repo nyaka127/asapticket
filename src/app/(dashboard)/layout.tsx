@@ -5,6 +5,7 @@ const sidebarLinks = [
   { href: '/', label: '🌐 Public Site', icon: '🏠' },
   { href: '/dashboard', label: 'Dashboard', icon: '📊' },
   { href: '/dashboard/leads', label: 'Leads', icon: '👥' },
+  { href: '/dashboard/bookings', label: 'Bookings', icon: '🎫' },
   { href: '/dashboard/customers', label: 'Customers', icon: '👤' },
   { href: '/dashboard/quotes', label: 'Quotes', icon: '📜' },
 ];

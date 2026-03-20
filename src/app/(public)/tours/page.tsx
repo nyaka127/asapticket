@@ -1,6 +1,9 @@
 'use client';
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { formatPricing } from '@/lib/pricing';
+import { CurrencySwitcher } from '@/components/CurrencySwitcher';
+import { GlobalPublicFooter } from '@/components/GlobalPublicFooter';
 
 const TOUR_TYPES = [
   { id: 'city', label: '🏙 City Private Tour', desc: 'Expert guided walking tour of major landmarks' },
@@ -29,7 +32,13 @@ function ToursContent() {
   const [prefs, setPrefs] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeCurrency, setActiveCurrency] = useState('USD');
   const [form, setForm] = useState({ name: '', email: '', phone: '', notes: '' });
+
+  useEffect(() => {
+    const saved = localStorage.getItem('user-currency');
+    if (saved) setActiveCurrency(saved);
+  }, []);
 
   const PRICES = { private: 150, small: 75, large: 50 };
   const deposit = PRICES[groupSize as keyof typeof PRICES] || 75;
@@ -72,11 +81,14 @@ function ToursContent() {
         <div className="absolute inset-0 z-0 opacity-20">
           <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=1200" alt="World Map" className="w-full h-full object-cover" />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <span className="bg-brand-secondary text-brand-primary font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-widest mb-6 animate-pulse shadow-lg">ASAP EXCLUSIVE ACCESS</span>
-          <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tight">Personalized Tour Guides</h1>
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl font-medium mb-0">Certified experts with unadvertised local knowledge. Private & personalized experiences only.</p>
-        </div>
+          <div className="flex items-center justify-between mb-8 w-full max-w-4xl">
+             <div className="text-left">
+                <span className="bg-brand-secondary text-brand-primary font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-widest mb-6 animate-pulse shadow-lg block w-fit">ASAP EXCLUSIVE ACCESS</span>
+                <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tight">Personalized Tour Guides</h1>
+                <p className="text-lg md:text-xl text-white/70 max-w-2xl font-medium mb-0">Certified experts with unadvertised local knowledge. Private & personalized experiences only.</p>
+             </div>
+             <CurrencySwitcher />
+          </div>
       </div>
 
       <div className="max-w-7xl w-full mx-auto px-4 py-16">
@@ -165,10 +177,10 @@ function ToursContent() {
                       <h4 className="font-black text-purple-900 text-lg leading-tight mb-1">ASAP Expert Deposit</h4>
                       <p className="text-purple-600/70 text-xs font-medium">To lock in your unadvertised rate and expert guide.</p>
                    </div>
-                   <div className="text-center">
-                      <div className="text-sm font-black text-purple-400 line-through tracking-widest decoration-purple-600/30">${(deposit * 2.5).toFixed(0)}</div>
-                      <div className="text-5xl font-black text-purple-700 leading-none">${deposit}</div>
-                   </div>
+                    <div className="text-center">
+                       <div className="text-sm font-black text-purple-400 line-through tracking-widest decoration-purple-600/30">{formatPricing(deposit * 2.5, activeCurrency)}</div>
+                       <div className="text-5xl font-black text-purple-700 leading-none">{formatPricing(deposit, activeCurrency)}</div>
+                    </div>
                  </div>
 
                  <button type="submit" disabled={loading}
@@ -213,6 +225,7 @@ function ToursContent() {
           </div>
         </div>
       </div>
+      <GlobalPublicFooter />
     </div>
   );
 }

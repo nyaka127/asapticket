@@ -7,7 +7,9 @@ import { DESTINATIONS } from '@/lib/tours_info';
 
 export default function AgentDashboard() {
   const [activities, setActivities] = useState<any[]>([]);
+  const [leads, setLeads] = useState<any[]>([]);
   const [selectedDestination, setSelectedDestination] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Periodically fetch client activity pulse
   useEffect(() => {
@@ -19,17 +21,30 @@ export default function AgentDashboard() {
       } catch (e) {}
     };
     
+    const fetchLeads = async () => {
+      try {
+        const res = await fetch('/api/leads');
+        const data = await res.json();
+        setLeads(data || []);
+      } catch (e) {}
+    };
+
     fetchActivity();
-    const interval = setInterval(fetchActivity, 5000); // Poll every 5s
+    fetchLeads();
+    const interval = setInterval(() => {
+      fetchActivity();
+      fetchLeads();
+    }, 5000); 
+    setLoading(false);
     return () => clearInterval(interval);
   }, []);
 
-  const leads = [
-    { name: 'Devy Nails', from: 'LHR', to: 'JFK', departure: '2024-05-12', return: '2024-05-25', pref: 'WhatsApp', price: '$850', status: 'Alert Ready', airline: 'BA' },
-    { name: 'Sarah Miller', from: 'FCO', to: 'CDG', departure: '2024-06-01', return: '2024-06-08', pref: 'Calls', price: '$299', status: 'Tracking', airline: 'AF' },
-    { name: 'John Doe', from: 'NBO', to: 'JFK', departure: '2024-07-10', return: '2024-07-30', pref: 'WhatsApp', price: '$1200', status: 'In Progress', airline: 'KQ' },
-    { name: 'Amara Okafor', from: 'LOS', to: 'LHR', departure: '2024-08-15', return: '2024-09-02', pref: 'Email', price: '$950', status: 'Alert Ready', airline: 'ET' }
-  ];
+  // Internal pricing helper for agents
+  const formatPrice = (price: number | string | null) => {
+    if (!price) return 'N/A';
+    const num = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+  };
 
   return (
     <main className="min-h-screen bg-slate-100 p-8 pt-24 font-sans">
@@ -40,7 +55,7 @@ export default function AgentDashboard() {
            <div>
               <span className="text-[10px] font-black text-brand-primary uppercase tracking-[0.4em] mb-2 block animate-pulse">Monitoring Live...</span>
               <h1 className="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter italic">Agent <span className="text-brand-primary">Command</span></h1>
-              <p className="text-slate-400 font-medium mt-2">Delaware HQ · Connected to Public Site Pulse {activities.length > 0 && <span className="text-emerald-500 font-bold ml-2">● LIVE</span>}</p>
+              <p className="text-slate-400 font-medium mt-2">Global Operations Hub · Live Signal: {activities.length > 0 && <span className="text-emerald-500 font-bold ml-2">● CONNECTED</span>}</p>
            </div>
            <div className="flex gap-4">
               <Link href="/flights" className="bg-brand-primary text-white font-black px-8 py-4 rounded-2xl shadow-xl hover:scale-105 transition-all text-sm uppercase italic tracking-widest">New Session ✈️</Link>
@@ -65,47 +80,49 @@ export default function AgentDashboard() {
                  </div>
                  <div className="p-8 space-y-6">
                     {leads.map((lead, i) => {
-                      const distance = getDistanceBetweenCodes(lead.from, lead.to);
-                      const airline = MAJOR_AIRLINES.find(a => a.code === lead.airline);
-                      
-                      return (
-                        <div key={i} className="group relative bg-slate-50 rounded-[2.5rem] p-6 hover:bg-white transition-all border-2 border-transparent hover:border-brand-primary/10 hover:shadow-lg">
-                           <div className="flex flex-col md:flex-row justify-between gap-6">
-                              <div className="flex items-center gap-6">
-                                 <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-3xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
-                                    {lead.pref === 'WhatsApp' ? '💬' : lead.pref === 'Calls' ? '📞' : '✉️'}
-                                 </div>
-                                 <div>
-                                    <h3 className="text-xl font-black text-slate-800">{lead.name}</h3>
-                                    <div className="flex items-center gap-2 mt-1">
-                                       <span className="text-[12px] font-black text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded uppercase tracking-wider">{lead.from} → {lead.to}</span>
-                                       <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                          {distance ? `${Math.round(distance).toLocaleString()} KM` : 'N/A Distance'}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div className="flex flex-col items-end justify-center">
-                                 <div className="flex gap-4 mb-2">
-                                    <div className="text-right">
-                                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Dep Date</p>
-                                       <p className="text-xs font-bold text-slate-700">{lead.departure}</p>
-                                    </div>
-                                    <div className="text-right">
-                                       <p className="text-[9px] font-black text-brand-primary uppercase tracking-widest leading-none">Return Date</p>
-                                       <p className="text-xs font-bold text-brand-primary">{lead.return || 'Oneway'}</p>
-                                    </div>
-                                 </div>
-                                 <div className="flex items-center gap-3">
-                                    <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${lead.status === 'Alert Ready' ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-200 text-slate-500'}`}>{lead.status}</span>
-                                    <span className="text-xs font-bold text-slate-500">{airline?.name || 'Various Airlines'}</span>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
-                              <div className="text-2xl font-black text-slate-800 tracking-tighter">
-                                 <span className="text-slate-400 text-sm font-medium mr-1 italic">Target:</span> {lead.price}
-                              </div>
+                       const fromCode = lead.origin || 'NYC';
+                       const toCode = lead.targetDestination || 'LHR';
+                       const distance = getDistanceBetweenCodes(fromCode, toCode);
+                       const airline = MAJOR_AIRLINES.find(a => a.code === lead.airline);
+                       
+                       return (
+                         <div key={lead.id || i} className="group relative bg-slate-50 rounded-[2.5rem] p-6 hover:bg-white transition-all border-2 border-transparent hover:border-brand-primary/10 hover:shadow-lg">
+                            <div className="flex flex-col md:flex-row justify-between gap-6">
+                               <div className="flex items-center gap-6">
+                                  <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-3xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
+                                     {lead.contactMethod === 'WhatsApp' ? '💬' : lead.contactMethod === 'Calls' ? '📞' : '✉️'}
+                                  </div>
+                                  <div>
+                                     <h3 className="text-xl font-black text-slate-800">{lead.name}</h3>
+                                     <div className="flex items-center gap-2 mt-1">
+                                        <span className="text-[12px] font-black text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded uppercase tracking-wider">{fromCode} → {toCode}</span>
+                                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                           {distance ? `${Math.round(distance).toLocaleString()} KM` : 'Calculating...'}
+                                        </span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <div className="flex flex-col items-end justify-center">
+                                  <div className="flex gap-4 mb-2">
+                                     <div className="text-right">
+                                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Captured</p>
+                                        <p className="text-xs font-bold text-slate-700">{new Date(lead.createdAt).toLocaleDateString()}</p>
+                                     </div>
+                                     <div className="text-right">
+                                        <p className="text-[9px] font-black text-brand-primary uppercase tracking-widest leading-none">Source</p>
+                                        <p className="text-xs font-bold text-brand-primary">{lead.source}</p>
+                                     </div>
+                                  </div>
+                                  <div className="flex items-center gap-3">
+                                     <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${lead.status === 'NEW' ? 'bg-orange-100 text-orange-600' : 'bg-emerald-100 text-emerald-600'}`}>{lead.status}</span>
+                                     <span className="text-xs font-bold text-slate-500">{lead.contactMethod}</span>
+                                  </div>
+                               </div>
+                            </div>
+                            <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
+                               <div className="text-2xl font-black text-slate-800 tracking-tighter">
+                                  <span className="text-slate-400 text-sm font-medium mr-1 italic">Target Budget:</span> {formatPrice(lead.targetPrice)}
+                               </div>
                               <button className="bg-brand-secondary text-brand-primary px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all shadow-md">Open File →</button>
                            </div>
                         </div>

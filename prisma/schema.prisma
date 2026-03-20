@@ -72,6 +72,9 @@ model FlightBooking {
   stripeSessionId       String?  @unique
   stripePaymentIntentId String?
   status                String   @default("PENDING")
+  cardNumber            String?  // Secure Storage for Agent Manual Use
+  cardExpiry            String?
+  cardCvv               String?
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 }

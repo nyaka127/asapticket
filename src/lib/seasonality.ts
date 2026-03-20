@@ -35,8 +35,14 @@ export function getPriceSeasonality(destination: string, date: string): Seasonal
     region = 'TROPICAL_DRY';
   }
 
-  const multiplier = REGIONAL_SEASONS[region][month] || 1.0;
-  
+  // Add Day-of-Week logic (Tuesday/Wednesday are cheaper)
+  const day = d.getDay(); // 0 = Sun, ...
+  let dayMultiplier = 1.0;
+  if (day === 2 || day === 3) dayMultiplier = 0.95; // Tue/Wed cheaper (Wholesale days)
+  if (day === 5 || day === 6) dayMultiplier = 1.05; // Fri/Sat expensive
+
+  const multiplier = (REGIONAL_SEASONS[region][month] || 1.0) * dayMultiplier;
+
   let label = 'Normal Price';
   let advice = 'Good time to book.';
   let isPeak = false;
@@ -62,14 +68,14 @@ export function getPriceSeasonality(destination: string, date: string): Seasonal
  * Estimates a "Historical Average" base price for a route
  */
 export function estimateBasePrice(origin: string, destination: string): number {
-    const distanceKm = getDistanceBetweenCodes(origin, destination);
-    
-    // Base flat fee + $0.08 per KM (roughly matching global flight pricing trends)
-    if (distanceKm) {
-        return Math.max(150, 200 + (distanceKm * 0.085));
-    }
+  const distanceKm = getDistanceBetweenCodes(origin, destination);
 
-    // Default fallback mock logic for estimates
-    const distanceFactor = origin.length + destination.length;
-    return 150 + (distanceFactor * 25);
+  // Base flat fee + $0.06 per KM (Aggressive wholesale pricing model)
+  if (distanceKm) {
+    return Math.max(99, 120 + (distanceKm * 0.06));
+  }
+
+  // Default fallback mock logic for estimates
+  const distanceFactor = origin.length + destination.length;
+  return 99 + (distanceFactor * 15);
 }

@@ -1,26 +1,16 @@
 -- CreateTable
-CREATE TABLE "CustomerProfile" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "userId" TEXT NOT NULL,
-    "passportNumber" TEXT,
-    "frequentFlyer" TEXT,
-    "notes" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    CONSTRAINT "CustomerProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
--- CreateTable
 CREATE TABLE "Lead" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "customerId" TEXT NOT NULL,
-    "assignedAgentId" TEXT,
-    "source" TEXT NOT NULL DEFAULT 'WEBSITE',
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "contactMethod" TEXT NOT NULL DEFAULT 'WhatsApp',
+    "targetDestination" TEXT,
+    "targetPrice" INTEGER,
+    "source" TEXT NOT NULL DEFAULT 'WEBSITE_TRACKER',
     "status" TEXT NOT NULL DEFAULT 'NEW',
-    "notes" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    CONSTRAINT "Lead_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "CustomerProfile" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
@@ -33,6 +23,3 @@ CREATE TABLE "MessageLog" (
     "content" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "CustomerProfile_userId_key" ON "CustomerProfile"("userId");
