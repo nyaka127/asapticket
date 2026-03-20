@@ -130,7 +130,14 @@ model Lead {
   email           String
   phone           String
   contactMethod   String   @default("WhatsApp") // WhatsApp, SMS, Calls
-  targetDestination String?
+  origin          String?  // Flight origin code
+  targetDestination String? // Flight destination code
+  departureDate   String?
+  returnDate      String?
+  cabin           String?  @default("ECONOMY")
+  flightId        String?
+  deposit         Boolean  @default(false)
+  seats           Boolean  @default(false)
   targetPrice     Int?
   assignedAgentId String?
   source          String   @default("WEBSITE")

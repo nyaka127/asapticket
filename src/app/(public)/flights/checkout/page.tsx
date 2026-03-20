@@ -1,12 +1,15 @@
 'use client';
-import React, { useState, useEffect, Suspense } from 'react';
+import * as React from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { MAJOR_CITIES } from '@/lib/geo';
 import { formatPricing } from '@/lib/pricing';
+import { useClientPulse } from '@/hooks/useClientPulse';
 
 function CheckoutContent() {
    const searchParams = useSearchParams();
-   const router = useRouter();
+   const router = useRouter() as any;
+   const { trackEvent } = useClientPulse();
    const [paymentType, setPaymentType] = useState<'full' | 'deposit'>('full');
    const [seatReserve, setSeatReserve] = useState(false);
    const [form, setForm] = useState({
@@ -99,9 +102,10 @@ function CheckoutContent() {
          const { bookingId } = await res.json();
 
          // Monitoring global securement pulse
-         fetch('/api/monitor', {
-            method: 'POST',
-            body: JSON.stringify({ action: `Flight SECURED: ${form.firstName} ${form.lastName} for ${origin} → ${dest}`, source: 'Website' })
+         trackEvent('Booking SECURED', { 
+            name: `${form.firstName} ${form.lastName}`, 
+            route: `${origin} → ${dest}`,
+            paymentType 
          });
 
          // Intelligent Routing based on Add-ons

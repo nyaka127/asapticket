@@ -4,7 +4,14 @@ import { prisma } from '@/lib/prisma';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, pref, destination, price } = body;
+    const { 
+      name, email, phone, pref, 
+      origin, destination, 
+      departureDate, returnDate, 
+      cabin, flightId, 
+      deposit, seats,
+      price 
+    } = body;
 
     const lead = await prisma.lead.create({
       data: {
@@ -12,7 +19,14 @@ export async function POST(request: Request) {
         email,
         phone,
         contactMethod: pref || 'WhatsApp',
+        origin,
         targetDestination: destination || 'Anywhere',
+        departureDate,
+        returnDate,
+        cabin: cabin || 'ECONOMY',
+        flightId,
+        deposit: !!deposit,
+        seats: !!seats,
         targetPrice: price ? parseInt(price) : null,
         source: 'WEBSITE_TRACKER',
         status: 'NEW',

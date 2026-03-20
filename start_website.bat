@@ -60,26 +60,33 @@ start http://localhost:3001
 :: 2. Open Public Booking Website (Port 3000)
 start http://localhost:3000
 echo [*] Starting dual servers... (Press Ctrl+C to stop)
-echo [*] ADMIN DASHBOARD LINK: http://localhost:3001
-echo [*] PUBLIC BOOKING LINK: http://localhost:3000
 echo.
-echo [!] LOCAL NETWORK ACCESS (Your devices on this Wi-Fi):
+echo =====================================================
+echo    1. CLIENT FLIGHT TICKET (Laptop):  http://localhost:3000
+echo    2. AGENT SUPERVISOR (Laptop):      http://localhost:3001
+echo =====================================================
+echo.
+echo [!] SMARTPHONE ACCESS (Same Wi-Fi Network):
 echo     -------------------------------------------------------
-echo     1. Look for your IPv4 Address below:
+echo     1. Find your IPv4 Address below:
 ipconfig | findstr /i "IPv4"
-echo     2. On your phone, type: http://[YOUR_IP_ABOVE]:3000
+echo     2. CLIENTS (Phone):    http://[YOUR_IP_ABOVE]:3000
+echo     3. SUPERVISOR (Phone): http://[YOUR_IP_ABOVE]:3001
 echo     -------------------------------------------------------
 echo.
 echo [!] WORLDWIDE ACCESS (Free Hosting via your Internet):
-echo     Launching secure tunnel... (Look for the new window)
+echo     Launching dual secure tunnels... (Look for the TWO new windows)
 echo.
-:: Using localhost.run to avoid the 'Tunnel Password' warning page
-start "ASAP Global Tunnel" cmd /k "ssh -o StrictHostKeyChecking=no -R 80:localhost:3000 nokey@localhost.run"
+:: Tunnel 1: Public Booking Site (Port 3000)
+start "CLIENT BOOKING TUNNEL" cmd /k "ssh -o StrictHostKeyChecking=no -R 80:localhost:3000 nokey@localhost.run"
+:: Tunnel 2: Agent Supervisor Hub (Port 3001)
+start "AGENT SUPERVISOR TUNNEL" cmd /k "ssh -o StrictHostKeyChecking=no -R 80:localhost:3001 nokey@localhost.run"
 echo.
 echo     [!] INSTRUCTIONS:
-echo         1. Look at the NEW black window that opened.
-echo         2. Copy the https link (it usually ends in .lhr.life or .localhost.run)
-echo         3. Send that link to clients. It opens DIRECTLY (No warnings).
+echo         1. TWO black windows will open.
+echo         2. CLIENT WINDOW: Use the link to send to passengers (Smartphone).
+echo         3. AGENT WINDOW:  Use the link for yourself (Laptop Oversight).
+echo         4. Copy the https links (ending in .lhr.life or .localhost.run).
 echo.
 echo     -------------------------------------------------------
 node server.js

@@ -41,6 +41,15 @@ app.prepare().then(() => {
   createServer((req, res) => {
     try {
       const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+
+      // Ensure root on port 3001 always goes to dashboard
+      if (pathname === '/') {
+        res.writeHead(302, { Location: '/dashboard' });
+        res.end();
+        return;
+      }
+
       handle(req, res, parsedUrl);
     } catch (err) {
       console.error('Error occurred handling', req.url, err);

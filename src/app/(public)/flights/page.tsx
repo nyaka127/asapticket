@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, useEffect, Suspense } from 'react';
+import * as React from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ProcedureProgress } from '@/components/ProcedureProgress';
@@ -8,9 +9,11 @@ import { calculateClientPrice, formatPricing, getHistoricalPriceStatus } from '@
 import { MAJOR_CITIES, getDistanceBetweenCodes } from '@/lib/geo';
 import { CurrencySwitcher } from '@/components/CurrencySwitcher';
 import { GlobalPublicFooter } from '@/components/GlobalPublicFooter';
+import { useClientPulse } from '@/hooks/useClientPulse';
 
 function FlightsContent() {
    const searchParams = useSearchParams();
+   const { trackEvent } = useClientPulse();
    const [origin, setOrigin] = useState(searchParams.get('origin') || '');
    const [destination, setDestination] = useState(searchParams.get('destination') || '');
    const [date, setDate] = useState(searchParams.get('departureDate') || new Date(Date.now() + 7 * 864e5).toISOString().split('T')[0]);
@@ -609,7 +612,11 @@ function FlightsContent() {
                                     <span className="text-[10px] opacity-40 font-normal">Self-Service</span>
                                  </Link>
                                  <button
-                                    onClick={() => { setSelectedFlightForLead(flight); setShowLeadModal(true); }}
+                                    onClick={() => { 
+                                       setSelectedFlightForLead(flight); 
+                                       setShowLeadModal(true); 
+                                       trackEvent('Expert Hub Opened', { flightId: flight.id, route: `${depCode}→${arrCode}` });
+                                    }}
                                     className="w-full bg-brand-secondary text-brand-primary font-black py-4 rounded-3xl hover:bg-brand-secondary/80 transition-all text-sm uppercase tracking-widest shadow-lg shadow-brand-secondary/20">
                                     Expert Service Request
                                  </button>
