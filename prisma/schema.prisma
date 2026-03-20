@@ -125,26 +125,34 @@ model CustomerProfile {
 }
 
 model Lead {
-  id              String   @id @default(cuid())
-  name            String
-  email           String
-  phone           String
-  contactMethod   String   @default("WhatsApp") // WhatsApp, SMS, Calls
-  origin          String?  // Flight origin code
-  targetDestination String? // Flight destination code
-  departureDate   String?
-  returnDate      String?
-  cabin           String?  @default("ECONOMY")
-  flightId        String?
-  deposit         Boolean  @default(false)
-  seats           Boolean  @default(false)
-  targetPrice     Int?
-  assignedAgentId String?
-  source          String   @default("WEBSITE")
-  status          String   @default("NEW")
-  notes           String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String   @id @default(cuid())
+  name              String
+  email             String
+  phone             String
+  contactMethod     String
+  targetDestination String?
+  targetPrice       Float?
+  source            String   @default("Manual")
+  status            String   @default("NEW")
+  createdAt         DateTime @default(now())
+
+  // New fields for synchronization
+  origin            String?
+  departureDate     String?
+  returnDate        String?
+  cabin             String?
+  flightId          String?
+  deposit           Boolean  @default(false)
+  seats             Boolean  @default(false)
+  preferredAirlines String?
+  layoverPreferences String?
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  action    String
+  source    String   @default("Website")
+  timestamp DateTime @default(now())
 }
 
 model MessageLog {
