@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const bookingId = object.metadata?.bookingId;
 
     if (bookingId) {
-      await prisma.booking.update({
+      await prisma.flightBooking.update({
         where: { id: bookingId },
         data: {
           status: 'CONFIRMED',

@@ -1,0 +1,28 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const url = request.nextUrl.clone();
+  
+  // Public Site Routing (Port 3000)
+  if (process.env.SITE_ROLE === 'public') {
+    // Hide the Admin Dashboard root page by secretly rewriting "/" to "/flights"
+    if (url.pathname === '/') {
+       url.pathname = '/flights';
+       return NextResponse.rewrite(url);
+    }
+  }
+
+  // Admin Site Routing (Port 3001)
+  if (process.env.SITE_ROLE === 'admin') {
+    // Allow everything naturally.
+    // Dashboard stays at "/", and admin can also view "/flights" if they want.
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  // We only really need it to catch traffic at the root path, but let's run it on everything except next internals
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+}

@@ -20,8 +20,6 @@ function CheckoutContent() {
    const [clientSecret, setClientSecret] = useState('');
    const [addons, setAddons] = useState({ hotel: true, car: true });
    const [cardDetails, setCardDetails] = useState({ number: '', expiry: '', cvc: '' });
-   const [paymentMethod, setPaymentMethod] = useState<'card' | 'mobile'>('card');
-   const [mobileDetails, setMobileDetails] = useState({ network: 'MPESA', phone: '' });
    const [copied, setCopied] = useState(false);
 
    const languages = [
@@ -70,18 +68,6 @@ function CheckoutContent() {
       setLoading(true);
       setError(null);
       try {
-         if (paymentMethod === 'mobile') {
-            const mobileRes = await fetch('/api/payments/mobile', {
-               method: 'POST',
-               headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify({
-                  network: mobileDetails.network,
-                  phone: mobileDetails.phone,
-                  amount: paymentType === 'deposit' ? 50 : Number(price)
-               })
-            });
-            if (!mobileRes.ok) throw new Error('Mobile payment initiation failed');
-         }
          // In a real-world scenario with Stripe, you would first create a PaymentMethod/Token
          // from the card details (using Stripe.js on the client) and send that token to
          // the backend instead of the raw card information.
@@ -309,81 +295,51 @@ function CheckoutContent() {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/20 blur-[100px]"></div>
                         <div className="relative z-10">
                            <div className="flex items-center gap-3 mb-8">
-                              <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-xl">{paymentMethod === 'card' ? '💳' : '📱'}</div>
+                              <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-xl">💳</div>
                               <h3 className="text-xl font-black italic uppercase tracking-tighter">Secure Payment Processing</h3>
                            </div>
 
-                           <div className="flex gap-4 mb-8 bg-black/20 p-1 rounded-2xl">
-                              <button type="button" onClick={() => setPaymentMethod('card')} className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${paymentMethod === 'card' ? 'bg-white text-slate-900 shadow-lg' : 'text-white/40 hover:text-white'}`}>Credit Card</button>
-                              <button type="button" onClick={() => setPaymentMethod('mobile')} className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${paymentMethod === 'mobile' ? 'bg-brand-secondary text-brand-primary shadow-lg' : 'text-white/40 hover:text-white'}`}>Mobile Money</button>
-                           </div>
-
                            {/* Stripe Elements Placeholder UI - Represents the mounted Element */}
-                           {paymentMethod === 'card' ? (
-                              <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
-                                 <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                                    <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">Card Information</label>
-                                    <div className="flex items-center gap-3">
-                                       <div className="text-white/40">💳</div>
-                                       <input
-                                          type="text"
-                                          placeholder="0000 0000 0000 0000"
-                                          required
-                                          value={cardDetails.number}
-                                          onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })}
-                                          className="bg-transparent border-none text-white font-mono text-sm placeholder-white/20 w-full focus:ring-0"
-                                       />
-                                    </div>
-                                 </div>
-                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                                       <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">Expiry Date</label>
-                                       <input
-                                          type="text"
-                                          placeholder="MM / YY"
-                                          required
-                                          value={cardDetails.expiry}
-                                          onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })}
-                                          className="bg-transparent border-none text-white font-mono text-sm placeholder-white/20 w-full focus:ring-0"
-                                       />
-                                    </div>
-                                    <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                                       <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">CVC</label>
-                                       <input
-                                          type="text"
-                                          placeholder="123"
-                                          required
-                                          value={cardDetails.cvc}
-                                          onChange={(e) => setCardDetails({ ...cardDetails, cvc: e.target.value })}
-                                          className="bg-transparent border-none text-white font-mono text-sm placeholder-white/20 w-full focus:ring-0"
-                                       />
-                                    </div>
-                                 </div>
-                              </div>
-                           ) : (
-                              <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
-                                 <div className="grid grid-cols-2 gap-4">
-                                    <button type="button" onClick={() => setMobileDetails({ ...mobileDetails, network: 'MPESA' })} className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 ${mobileDetails.network === 'MPESA' ? 'bg-emerald-600 border-emerald-500' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                                       <span className="text-2xl">📲</span>
-                                       <span className="text-[10px] font-black uppercase tracking-widest">M-Pesa</span>
-                                    </button>
-                                    <button type="button" onClick={() => setMobileDetails({ ...mobileDetails, network: 'AIRTEL' })} className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 ${mobileDetails.network === 'AIRTEL' ? 'bg-red-600 border-red-500' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                                       <span className="text-2xl">📡</span>
-                                       <span className="text-[10px] font-black uppercase tracking-widest">Airtel Money</span>
-                                    </button>
-                                 </div>
-                                 <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                                    <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">Phone Number</label>
+                           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
+                              <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+                                 <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">Card Information</label>
+                                 <div className="flex items-center gap-3">
+                                    <div className="text-white/40">💳</div>
                                     <input
-                                       type="tel"
-                                       placeholder="254 7..."
-                                       value={mobileDetails.phone}
-                                       onChange={(e) => setMobileDetails({ ...mobileDetails, phone: e.target.value })}
+                                       type="text"
+                                       placeholder="0000 0000 0000 0000"
+                                       required
+                                       value={cardDetails.number}
+                                       onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })}
                                        className="bg-transparent border-none text-white font-mono text-sm placeholder-white/20 w-full focus:ring-0"
                                     />
                                  </div>
                               </div>
-                           )}
+                              <div className="grid grid-cols-2 gap-4">
+                                 <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+                                    <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">Expiry Date</label>
+                                    <input
+                                       type="text"
+                                       placeholder="MM / YY"
+                                       required
+                                       value={cardDetails.expiry}
+                                       onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })}
+                                       className="bg-transparent border-none text-white font-mono text-sm placeholder-white/20 w-full focus:ring-0"
+                                    />
+                                 </div>
+                                 <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+                                    <label className="block text-[8px] font-black text-white/40 uppercase tracking-widest mb-2">CVC</label>
+                                    <input
+                                       type="text"
+                                       placeholder="123"
+                                       required
+                                       value={cardDetails.cvc}
+                                       onChange={(e) => setCardDetails({ ...cardDetails, cvc: e.target.value })}
+                                       className="bg-transparent border-none text-white font-mono text-sm placeholder-white/20 w-full focus:ring-0"
+                                    />
+                                 </div>
+                              </div>
+                           </div>
 
                            <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 p-6 bg-white/5 rounded-[2rem] border border-white/10">
                               <div className="flex items-center gap-4">

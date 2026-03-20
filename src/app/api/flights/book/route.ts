@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     }
 
     // Map the frontend checkout form data to the Database Schema
-    const booking = await prisma.booking.create({
+    const booking = await prisma.flightBooking.create({
       data: {
         flightId: body.flightId,
         firstName: body.firstName,
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
         origin: body.origin,
         destination: body.destination,
         priceCents: body.priceCents || 0,
+        departureTime: body.departureTime ? new Date(body.departureTime) : new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), // Default to 14 days from now
         paymentStatus: body.paymentType === 'full' ? 'PAID' : 'DEPOSIT',
         status: 'PENDING',
         bookingReference: Math.random().toString(36).substring(2, 8).toUpperCase(),

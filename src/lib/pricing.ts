@@ -1,74 +1,26 @@
-/**
- * ASAP Tickets - Pricing Safeguard Engine
- * Ensures market-reasonable pricing while protecting against losses.
- */
-
-export interface PricingConfig {
-  minProfitMarginFlat: number; // Flat $ profit per ticket
-  minProfitPercent: number;    // Minimum % markup
-  marketRateBuffer: number;    // % added to cover fluctuations
+export function formatPricing(amount: number, currency: string = 'USD'): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount);
 }
 
-const DEFAULT_CONFIG: PricingConfig = {
-  minProfitMarginFlat: 15,      // $15 (Safer minimum profit per ticket)
-  minProfitPercent: 0.05,       // 5% (Sustainable volume markup)
-  marketRateBuffer: 0.05        // 5% (Safety buffer for volatility/currency flux)
-};
-
-const GLOBAL_LAUNCH_DISCOUNT = 0.85; // 15% flat discount for worldwide rollout
-
-/**
- * Calculates the final client price based on cost and seasonality.
- * @param baseCost The raw cost from the provider (e.g. SerpApi)
- * @param seasonalityMultiplier The multiplier from the seasonality engine
- */
-export function calculateClientPrice(baseCost: number, seasonalityMultiplier: number): number {
-  // 1. Apply Seasonality
-  let price = baseCost * seasonalityMultiplier;
-
-  // 2. Add minimal Market Rate Buffer
-  price *= (1 + DEFAULT_CONFIG.marketRateBuffer);
-
-  // 3. Ensure tiny Minimum Profit Margin for Launch
-  const minPriceWithPercent = baseCost * (1 + DEFAULT_CONFIG.minProfitPercent);
-  const minPriceWithFlat = baseCost + DEFAULT_CONFIG.minProfitMarginFlat;
-  const competitiveMinPrice = Math.max(minPriceWithPercent, minPriceWithFlat);
-
-  // 4. Apply Global Launch Discount
-  price *= GLOBAL_LAUNCH_DISCOUNT;
-
-  // Final Safeguard
-  return Math.max(price, competitiveMinPrice);
+export function calculateFee(base: number, percentage: number): number {
+  return base * (percentage / 100);
 }
 
-/**
- * Formats a currency value for display in a specific currency.
- * @param amountUsd The core price in USD
- * @param currencyCode The target currency code (e.g., 'GBP', 'KES')
- */
-export function formatPricing(amountUsd: number, currencyCode: string = 'USD'): string {
-  try {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currencyCode,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amountUsd);
-  } catch (error) {
-    // Fallback to USD if the currency code is invalid or causes a crash
-    return `$${amountUsd.toFixed(0)}`;
-  }
+export function calculateClientPrice(basePrice: number, seasonalityMultiplier: number): number {
+  return basePrice * seasonalityMultiplier * 1.05; // Base * season * 5% margin
 }
 
-/**
- * Historical Price Tracker (Performs real-time benchmark analysis)
- */
-export function getHistoricalPriceStatus(currentPriceUsd: number, distance: number) {
-  // Benchmarking based on public OTA averages (approx $0.14/km + taxes)
-  const historicalAvg = (distance * 0.14) + 180;
-  const diff = currentPriceUsd - historicalAvg;
+export function getHistoricalPriceStatus(clientPrice: number, distance: number | null): { color: string, icon: string, label: string, diff: number } {
+  // Rough estimate of a "market average"
+  const marketAvg = distance ? distance * 0.15 : clientPrice * 1.4; 
+  const diff = marketAvg - clientPrice;
 
-  if (diff < -50) return { label: 'Wholesale Deal', color: 'emerald', icon: '💎', diff: Math.abs(diff) };
-  if (diff > 80) return { label: 'High Demand', color: 'orange', icon: '🔥', diff: diff };
-  return { label: 'Below Market', color: 'blue', icon: '📉', diff: Math.abs(diff) };
+  if (diff > 200) return { color: 'emerald', icon: '🔥', label: 'Great Savings', diff };
+  if (diff > 0) return { color: 'emerald', icon: '✓', label: 'Below Average', diff };
+  return { color: 'slate', icon: 'ℹ', label: 'Market Rate', diff: 0 };
 }
