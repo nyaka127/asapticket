@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASAP Tickets | Global Wholesale Ticketing Authority</title>
+  <meta name="description" content="Secure non-published wholesale contracts unavailable to standard consumer booking sites. Tier-1 Direct GDS Uplink for Flights, Hotels, and Cars." />
+  <meta property="og:title" content="ASAP Tickets | Global Wholesale Ticketing Authority" />
+  <meta property="og:description" content="Access non-published wholesale settlements restricted from consumer portals. Guaranteed savings of up to 40% globally." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #eb3b5a;
+      --gold: #facc15;
+      --bg: #020617;
+      --bg2: #0f172a;
+      --white5: rgba(255,255,255,0.05);
+      --white10: rgba(255,255,255,0.10);
+      --white20: rgba(255,255,255,0.20);
+      --white40: rgba(255,255,255,0.40);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--white5); }
+    ::-webkit-scrollbar-thumb { background: var(--white10); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 160px 24px 220px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.18;
+      animation: subtlePulse 10s ease-in-out infinite alternate;
+    }
+    @keyframes subtlePulse { from { transform: scale(1); } to { transform: scale(1.06); } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, var(--bg) 0%, rgba(2,6,23,0.75) 50%, var(--bg) 100%);
+    }
+    .hero-glow {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 800px;
+      background: rgba(235,59,90,0.04);
+      filter: blur(200px);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 10; max-width: 1280px; margin: 0 auto; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--white5);
+      border: 1px solid var(--white10);
+      padding: 10px 28px;
+      border-radius: 999px;
+      margin-bottom: 48px;
+      backdrop-filter: blur(20px);
+      transform: skewX(-12deg);
+      animation: fadeSlideDown 1s ease both;
+    }
+    .badge-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 15px var(--gold);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .badge span {
+      font-size: 11px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.4em;
+      color: var(--gold); font-style: italic;
+    }
+
+    .trust-row {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      align-items: center; gap: 48px;
+      margin-bottom: 56px;
+      animation: fadeSlideDown 1s ease 0.2s both;
+    }
+    .trust-tp { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: default; }
+    .trust-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--white20); font-style: italic; }
+    .trust-tp-row { display: flex; align-items: center; gap: 10px; }
+    .tp-icon { background: #00b67a; padding: 7px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,182,122,0.3); display: flex; }
+    .stars { display: flex; gap: 4px; margin-left: 10px; }
+    .star { width: 22px; height: 22px; background: #00b67a; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .trust-score { color: var(--white20); font-size: 22px; font-weight: 900; margin-left: 8px; }
+    .trust-brand { font-size: 22px; font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -0.02em; }
+
+    .trust-award { display: flex; align-items: center; gap: 24px; border-left: 1px solid var(--white5); padding-left: 48px; cursor: default; }
+    .award-labels { display: flex; flex-direction: column; }
+    .award-gold { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--white20); font-style: italic; }
+    .award-year { font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; color: var(--gold); font-style: italic; animation: blink 2s ease-in-out infinite; }
+    .award-icon-wrap { width: 60px; height: 60px; border: 2px solid rgba(250,204,21,0.4); border-radius: 20px; display: flex; align-items: center; justify-content: center; transition: border-color 0.5s; }
+    .award-icon-wrap:hover { border-color: var(--gold); }
+    .award-name { font-size: 28px; font-weight: 900; font-style: italic; letter-spacing: -0.04em; line-height: 1; }
+    .award-sub { font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); opacity: 0.6; font-style: italic; margin-top: 6px; }
+
+    h1 {
+      font-size: clamp(56px, 10vw, 140px);
+      font-weight: 900; font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      margin-bottom: 40px;
+      animation: fadeSlideUp 1s ease both;
+    }
+    h1 .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 24px);
+      color: var(--white40);
+      max-width: 900px; margin: 0 auto 64px;
+      font-weight: 900; line-height: 1.6; font-style: italic;
+      animation: fadeSlideUp 1s ease 0.2s both;
+    }
+    .hero-sub strong { color: #fff; }
+
+    /* ── SEARCH BOX ── */
+    .search-box {
+      max-width: 1000px; margin: 0 auto;
+      background: var(--white5);
+      border: 1px solid var(--white10);
+      border-radius: 48px;
+      padding: 32px 36px;
+      box-shadow: 0 80px 160px rgba(0,0,0,0.7);
+      backdrop-filter: blur(30px);
+      animation: fadeZoomIn 1s ease 0.5s both;
+    }
+    .search-form { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+    .search-field { flex: 1; min-width: 200px; }
+    .search-field label { display: block; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--white20); font-style: italic; margin-bottom: 10px; }
+    .search-field input {
+      width: 100%; background: rgba(0,0,0,0.3);
+      border: 1px solid var(--white10); border-radius: 20px;
+      padding: 18px 22px; color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700; font-style: italic;
+      font-size: 15px; outline: none;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .search-field input:focus { background: rgba(255,255,255,0.08); border-color: var(--gold); }
+    .search-field input::placeholder { color: var(--white20); }
+    .search-plane { width: 56px; height: 56px; background: var(--white5); border: 1px solid var(--white10); border-radius: 18px; display: flex; align-items: center; justify-content: center; transition: transform 1s; }
+    .search-box:hover .search-plane { transform: rotate(180deg); }
+    .search-btn {
+      background: var(--red); color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 900; font-style: italic;
+      font-size: 14px; text-transform: uppercase;
+      letter-spacing: 0.2em;
+      padding: 20px 48px; border-radius: 40px; border: none;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 20px 50px rgba(235,59,90,0.3);
+      transition: background 0.4s, color 0.4s, transform 0.2s;
+    }
+    .search-btn:hover { background: #fff; color: #0f172a; }
+    .search-btn:active { transform: scale(0.97); }
+    .search-perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 36px; margin-top: 24px; }
+    .perk { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--white20); font-style: italic; display: flex; align-items: center; gap: 8px; }
+    .perk-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; opacity: 0.6; }
+
+    /* ── CARDS SECTION ── */
+    .section-cards { position: relative; z-index: 20; max-width: 1400px; margin: -100px auto 0; padding: 0 24px 120px; }
+    .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    @media(max-width:900px) { .cards-grid { grid-template-columns: 1fr; } }
+
+    .card-dark {
+      background: var(--white5);
+      border: 1px solid var(--white10);
+      border-radius: 56px; padding: 56px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+      backdrop-filter: blur(30px);
+      transition: border-color 0.4s;
+      position: relative; overflow: hidden;
+    }
+    .card-dark:hover { border-color: rgba(250,204,21,0.4); }
+    .card-glow { position: absolute; top: 0; right: 0; width: 240px; height: 240px; background: rgba(250,204,21,0.04); filter: blur(100px); pointer-events: none; }
+    .card-icon { width: 72px; height: 72px; background: var(--white5); border: 1px solid var(--white10); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 32px; transition: background 0.5s, box-shadow 0.5s; }
+    .card-dark:hover .card-icon { background: var(--gold); box-shadow: 0 0 30px var(--gold); }
+    .card-dark:hover .card-icon svg { color: var(--red) !important; }
+
+    .card-h { font-size: 38px; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; margin-bottom: 16px; }
+    .card-h .gold { color: var(--gold); }
+    .card-p { color: var(--white40); font-size: 16px; font-weight: 700; line-height: 1.65; font-style: italic; margin-bottom: 40px; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .service-link { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 12px; background: rgba(0,0,0,0.35); border: 1px solid var(--white5); border-radius: 28px; text-decoration: none; color: inherit; transition: border-color 0.3s, transform 0.3s; }
+    .service-link:hover { border-color: var(--gold); transform: translateY(-6px); }
+    .service-link span { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; color: var(--white40); font-style: italic; }
+
+    .btn-dark {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; padding: 26px; border-radius: 28px;
+      background: var(--bg2); border: 1px solid var(--white10);
+      color: #fff; font-family: 'Inter', sans-serif;
+      font-weight: 900; font-style: italic; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.4em;
+      text-decoration: none; transition: background 0.4s, color 0.4s;
+    }
+    .btn-dark:hover { background: var(--gold); color: var(--bg); }
+    .arrow { display: inline-block; transition: transform 0.4s; }
+    .btn-dark:hover .arrow { transform: translateX(8px); }
+
+    /* RED CARD */
+    .card-red {
+      background: var(--red);
+      border-radius: 56px; padding: 56px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: 0 60px 120px rgba(235,59,90,0.28);
+      position: relative; overflow: hidden;
+    }
+    .card-red-glow { position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: rgba(255,255,255,0.08); border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .card-red .card-icon { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .card-red .card-h .gold { color: var(--gold); }
+    .card-red .card-p { color: rgba(255,255,255,0.6); }
+
+    /* INQUIRY FORM */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    @media(max-width:600px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-input {
+      width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 22px; padding: 20px 24px; color: #fff;
+      font-family: 'Inter', sans-serif; font-weight: 700; font-style: italic;
+      font-size: 13px; outline: none; transition: background 0.3s;
+    }
+    .form-input:focus { background: rgba(255,255,255,0.18); }
+    .form-input::placeholder { color: rgba(255,255,255,0.2); }
+    .form-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 16px; }
+    .form-wa-hint { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: rgba(255,255,255,0.3); font-style: italic; flex: 1; }
+    .btn-gold {
+      background: var(--gold); color: var(--red);
+      font-family: 'Inter', sans-serif; font-weight: 900; font-style: italic;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.3em;
+      padding: 20px 40px; border-radius: 28px; border: none;
+      cursor: pointer; transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      white-space: nowrap;
+    }
+    .btn-gold:hover { background: #fff; }
+    .btn-gold:active { transform: scale(0.97); }
+    .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+    .form-success {
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 40px; padding: 48px 32px; text-align: center;
+      display: none; animation: fadeZoomIn 0.6s ease both;
+    }
+    .form-success.active { display: block; }
+    .success-icon { font-size: 56px; margin-bottom: 16px; }
+    .success-title { font-size: 26px; font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .success-text { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: rgba(255,255,255,0.4); font-style: italic; }
+
+    .contact-strip { display: flex; align-items: center; justify-content: space-between; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; position: relative; z-index: 5; flex-wrap: wrap; gap: 24px; }
+    .contact-phone { }
+    .contact-phone .label { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--gold); font-style: italic; margin-bottom: 6px; }
+    .contact-phone .number { font-size: 26px; font-weight: 900; font-style: italic; letter-spacing: -0.03em; }
+    .agents { display: flex; margin-left: -10px; }
+    .agent-av { width: 52px; height: 52px; border-radius: 14px; border: 2px solid var(--red); object-fit: cover; transition: transform 0.4s; margin-left: -10px; }
+    .agent-av:hover { transform: translateY(-8px); }
+    .agent-247 { width: 52px; height: 52px; border-radius: 14px; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; color: var(--red); margin-left: -10px; }
+
+    /* ── PROCESS ── */
+    .section-process { padding: 140px 24px; background: var(--bg2); position: relative; overflow: hidden; }
+    .process-glow { position: absolute; inset: 0; background: rgba(235,59,90,0.03); filter: blur(300px); pointer-events: none; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-tag { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6em; color: var(--red); font-style: italic; margin-bottom: 18px; }
+    .section-title { font-size: clamp(42px, 6vw, 80px); font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 32px; }
+    .section-divider { width: 120px; height: 6px; background: var(--red); border-radius: 4px; box-shadow: 0 0 30px var(--red); margin: 0 auto 80px; }
+    .text-center { text-align: center; }
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; }
+    @media(max-width:768px) { .process-grid { grid-template-columns: 1fr; gap: 48px; } .services-grid { grid-template-columns: repeat(2,1fr); } }
+    .process-item { position: relative; }
+    .process-num { font-size: 180px; font-weight: 900; color: var(--white5); position: absolute; top: -80px; left: -30px; pointer-events: none; font-style: italic; line-height: 1; transition: color 0.4s; }
+    .process-item:hover .process-num { color: rgba(235,59,90,0.08); }
+    .process-body { position: relative; z-index: 2; }
+    .process-icon { width: 80px; height: 80px; background: var(--white5); border: 1px solid var(--white10); border-radius: 28px; display: flex; align-items: center; justify-content: center; margin-bottom: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); transition: background 0.5s, border-color 0.5s; }
+    .process-item:hover .process-icon { background: var(--red); border-color: transparent; }
+    .process-h { font-size: 26px; font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .process-p { color: var(--white40); font-size: 16px; font-weight: 700; line-height: 1.7; font-style: italic; }
+
+    /* ── STATS ── */
+    .section-stats { padding: 80px 24px; border-top: 1px solid var(--white5); border-bottom: 1px solid var(--white5); background: var(--bg); }
+    .stats-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; }
+    @media(max-width:640px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    .stat-val { font-size: clamp(44px, 6vw, 72px); font-weight: 900; font-style: italic; letter-spacing: -0.04em; }
+    .stat-val.gold { color: var(--gold); animation: blink 3s ease-in-out infinite; }
+    .stat-val.green { color: #10b981; }
+    .stat-label { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5em; color: var(--white20); font-style: italic; margin-top: 8px; }
+
+    /* ── CONTACT BAR ── */
+    .section-contact { padding: 72px 24px; background: var(--white5); backdrop-filter: blur(30px); border-bottom: 1px solid var(--white5); }
+    .contact-bar { max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 48px; }
+    .contact-head .tag { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6em; color: var(--red); font-style: italic; margin-bottom: 12px; }
+    .contact-head .title { font-size: 36px; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; }
+    .contact-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    @media(max-width:768px) { .contact-methods { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    .contact-method { display: flex; align-items: flex-start; gap: 20px; }
+    .cm-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--white5); border: 1px solid var(--white10); display: flex; align-items: center; justify-content: center; transition: background 0.4s; flex-shrink: 0; }
+    .cm-icon:hover { background: var(--red); }
+    .cm-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em; color: var(--white20); font-style: italic; margin-bottom: 6px; }
+    .cm-value { font-size: 17px; font-weight: 900; font-style: italic; }
+    .cm-value.green { color: #10b981; }
+    .cm-value.blue { color: #60a5fa; }
+
+    /* ── FOOTER ── */
+    footer { padding: 40px 24px; background: var(--bg); text-align: center; border-top: 1px solid var(--white5); }
+    .footer-pulse { display: inline-flex; align-items: center; gap: 12px; background: var(--white5); border: 1px solid var(--white10); padding: 8px 20px; border-radius: 999px; margin-bottom: 16px; }
+    .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: blink 1.5s ease-in-out infinite; }
+    .footer-status { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5em; color: var(--white40); font-style: italic; }
+    .footer-copy { font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6em; color: var(--white10); font-style: italic; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-24px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeSlideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeZoomIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+
+    svg { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1464012356341-001097e33507?auto=format&fit=crop&q=80&w=1920" alt="Aviation" />
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
+  </div>
+  <div class="hero-inner">
+
+    <div class="badge">
+      <div class="badge-dot"></div>
+      <span>Verified Global GDS Node · Restricted Wholesale Inventory</span>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-tp">
+        <div class="trust-label">Global Authority Rating</div>
+        <div class="trust-tp-row">
+          <div class="tp-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="trust-brand">Trustpilot</span>
+          <div class="stars">
+            <div class="star"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          </div>
+          <span class="trust-score">4.8</span>
+        </div>
+      </div>
+      <div class="trust-award">
+        <div class="award-labels">
+          <div class="award-gold">Gold Standard</div>
+          <div class="award-year">Customer Success · 2024</div>
+        </div>
+        <div class="award-icon-wrap">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/></svg>
+        </div>
+        <div>
+          <div class="award-name">TITAN</div>
+          <div class="award-sub">Business Awards</div>
+        </div>
+      </div>
+    </div>
+
+    <h1>Global <span class="gold">Wholesale</span><br>Ticketing Authority</h1>
+
+    <p class="hero-sub">
+      Access non-published wholesale settlements restricted from consumer portals.
+      We utilize proprietary mainframe nodes to bypass retail markups and deliver
+      <strong>guaranteed savings of up to 40%</strong> globally.
+    </p>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <div class="search-field">
+          <label>Departure Hub</label>
+          <input type="text" id="origin" placeholder="Origin (e.g. NYC, LAX)" />
+        </div>
+        <div class="search-plane" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19.5 2.5c-1.5-1.5-3.5-1.5-5 0L11 6 2.8 4.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 6.2 7.3c.4.4.9.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        </div>
+        <div class="search-field">
+          <label>Destination Hub</label>
+          <input type="text" id="destination" placeholder="Destination (e.g. LON, DXB)" />
+        </div>
+        <button type="submit" class="search-btn">Identify Contracts</button>
+      </form>
+      <div class="search-perks">
+        <span class="perk"><span class="perk-dot"></span>Direct GDS Uplink</span>
+        <span class="perk"><span class="perk-dot"></span>Wholesale Exclusivity</span>
+        <span class="perk"><span class="perk-dot"></span>Instant Settlement</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ CARDS ══════════════════ -->
+<section class="section-cards">
+  <div class="cards-grid">
+
+    <!-- GDS Terminal Card -->
+    <div class="card-dark">
+      <div class="card-glow"></div>
+      <div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="card-h">Live <span class="gold">GDS Terminal</span></div>
+        <p class="card-p">Direct access to our audited global inventory of wholesale settlements. Designed for tactical round-trip deployments at restricted rates.</p>
+        <div class="services-grid">
+          <a href="tel:+12136946417" class="service-link">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19.5 2.5c-1.5-1.5-3.5-1.5-5 0L11 6 2.8 4.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 6.2 7.3c.4.4.9.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+            <span>Aviation</span>
+          </a>
+          <a href="tel:+12136946417" class="service-link">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M3 22V10l9-8 9 8v12H3zM9 22V12h6v10"/></svg>
+            <span>Resorts</span>
+          </a>
+          <a href="tel:+12136946417" class="service-link">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Fleet</span>
+          </a>
+        </div>
+      </div>
+      <a href="tel:+12136946417" class="btn-dark">Access Private Mainboard <span class="arrow">→</span></a>
+    </div>
+
+    <!-- Consulate / Inquiry Card -->
+    <div class="card-red">
+      <div class="card-red-glow"></div>
+      <div style="position:relative;z-index:5;">
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+        </div>
+        <div class="card-h">Private <span class="gold">Consulate</span></div>
+        <p class="card-p">Our human case officers utilize proprietary "Negotiated Space" to unlock deeper discounts unavailable digitally. Recommended for complex high-value itineraries.</p>
+
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">✅</div>
+          <div class="success-title">Identity Verified</div>
+          <div class="success-text">A Senior Tactical Agent will initiate contact within 10 minutes.</div>
+          <button onclick="resetForm()" style="margin-top:28px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:0.4em;color:var(--gold);background:none;border:none;cursor:pointer;font-style:italic;">Request Secondary Deployment</button>
+        </div>
+
+        <form id="inquiryForm" onsubmit="handleInquiry(event)">
+          <div class="form-grid">
+            <input class="form-input" type="text" name="name" placeholder="Official Full Name" required />
+            <input class="form-input" type="tel" name="phone" placeholder="Tactical Mobile" required />
+          </div>
+          <input class="form-input" type="email" name="email" placeholder="Secure Email Uplink" style="width:100%;margin-bottom:0;" />
+          <div class="form-footer">
+            <span class="form-wa-hint">
+              <svg style="display:inline;vertical-align:middle;margin-right:8px;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(250,204,21,0.8)" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+              Direct WhatsApp Priority Link
+            </span>
+            <button type="submit" class="btn-gold" id="submitBtn">Request Assignment</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="contact-strip">
+        <div class="contact-phone">
+          <div class="label">Identity Desk Line</div>
+          <div class="number">+1 213 694 6417</div>
+        </div>
+        <div class="agents">
+          <img class="agent-av" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150&h=150" alt="Agent 1" />
+          <img class="agent-av" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150&h=150" alt="Agent 2" />
+          <img class="agent-av" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150&h=150" alt="Agent 3" />
+          <div class="agent-247">24/7</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ PROCESS ══════════════════ -->
+<section class="section-process">
+  <div class="process-glow"></div>
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-tag">Tactical Logistics Hub</div>
+      <div class="section-title">Industrial Processing <br><span style="color:var(--red)">& Distribution</span></div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="process-grid">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <div class="process-body">
+          <div class="process-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="process-h">Direct GDS Node</div>
+          <p class="process-p">We maintain unrestricted direct-to-mainframe links with tier-1 GDS clusters, bypassing price-inflating retail layers and consumer-facing markups.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <div class="process-body">
+          <div class="process-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          </div>
+          <div class="process-h">Audited Routing</div>
+          <p class="process-p">Unlike automated retail engines, we perform deep-packet inspection of all carrier contracts to identify restricted "Negotiated Capacity" for our clients.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <div class="process-body">
+          <div class="process-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="process-h">Settlement Shield</div>
+          <p class="process-p">All identified settlements are backed by a secondary No-Loss guarantee and 24/7 Global Crisis desk support to maintain full legal indemnity during travel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ STATS ══════════════════ -->
+<section class="section-stats">
+  <div class="stats-grid">
+    <div><div class="stat-val gold">$4.2B+</div><div class="stat-label">Settled Assets</div></div>
+    <div><div class="stat-val">200+</div><div class="stat-label">Direct Nodes</div></div>
+    <div><div class="stat-val">40%</div><div class="stat-label">Target Savings</div></div>
+    <div><div class="stat-val green">99.9%</div><div class="stat-label">Securement Rate</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT BAR ══════════════════ -->
+<section class="section-contact">
+  <div class="contact-bar">
+    <div class="contact-head">
+      <div class="tag">Security Network</div>
+      <div class="title">Continental Access<br>& Support</div>
+    </div>
+    <div class="contact-methods">
+      <div class="contact-method">
+        <div class="cm-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6.12 6.12l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="cm-label">Crisis Desk</div>
+          <div class="cm-value">+1 213 694 6417</div>
+        </div>
+      </div>
+      <div class="contact-method">
+        <div class="cm-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <div>
+          <div class="cm-label">WhatsApp Uplink</div>
+          <div class="cm-value green"><a href="https://wa.me/12136946417" style="color:inherit;text-decoration:none;">Secure Live Feed</a></div>
+        </div>
+      </div>
+      <div class="contact-method">
+        <div class="cm-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="cm-label">Administrative</div>
+          <div class="cm-value blue">support@asap.travel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div class="footer-pulse">
+    <span class="pulse-dot"></span>
+    <span class="footer-status">Continental System Pulse: NORMAL</span>
+  </div>
+  <br>
+  <p class="footer-copy">Global Uplink Terminal V4.1 · Optimized for Strategic Securement · © 2024 Wholesale Authority</p>
+</footer>
+
+<script>
+  function handleSearch(e) {
+    e.preventDefault();
+    const origin = document.getElementById('origin').value.trim();
+    const dest   = document.getElementById('destination').value.trim();
+    if (!origin || !dest) return;
+    const msg = encodeURIComponent(`Hi, I'd like to book a flight from ${origin} to ${dest}. Please send me wholesale rates.`);
+    window.open(`https://wa.me/12136946417?text=${msg}`, '_blank');
+  }
+
+  function handleInquiry(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Synchronizing...';
+    btn.disabled = true;
+    const data = new FormData(e.target);
+    const name  = data.get('name') || '';
+    const phone = data.get('phone') || '';
+    const email = data.get('email') || '';
+    const msg = encodeURIComponent(`New Wholesale Inquiry\nName: ${name}\nPhone: ${phone}\nEmail: ${email}`);
+    setTimeout(() => {
+      window.open(`https://wa.me/12136946417?text=${msg}`, '_blank');
+      document.getElementById('inquiryForm').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('active');
+    }, 800);
+  }
+
+  function resetForm() {
+    document.getElementById('inquiryForm').reset();
+    document.getElementById('inquiryForm').style.display = '';
+    document.getElementById('formSuccess').classList.remove('active');
+    document.getElementById('submitBtn').textContent = 'Request Assignment';
+    document.getElementById('submitBtn').disabled = false;
+  }
+</script>
+</body>
+</html>
