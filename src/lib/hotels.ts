@@ -29,32 +29,74 @@ export const searchHotels = async (criteria: HotelSearchCriteria) => {
     'LON': [
       { name: "The Ritz London", stars: 5, location: "150 Piccadilly, St. James's", image: "https://images.unsplash.com/photo-1565031491338-45f96c67b376?auto=format&fit=crop&q=80&w=800" },
       { name: "The Savoy", stars: 5, location: "Strand, London", image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=800" },
-      { name: "Shangri-La The Shard", stars: 5, location: "31 St Thomas St", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" }
+      { name: "Shangri-La The Shard", stars: 5, location: "31 St Thomas St", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" },
+      { name: "Claridge's", stars: 5, location: "Brook Street, Mayfair", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Langham, London", stars: 5, location: "1C Portland Pl", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Corinthia London", stars: 5, location: "Whitehall Pl", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" },
+      { name: "Rosewood London", stars: 5, location: "252 High Holborn", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" },
+      { name: "Ham Yard Hotel", stars: 5, location: "1 Ham Yard", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Berkeley", stars: 5, location: "Wilton Pl, Knightsbridge", image: "https://images.unsplash.com/photo-1551882547-ff43c33ff783?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Ned", stars: 5, location: "27 Poultry, London", image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&q=80&w=800" }
     ],
     'PAR': [
       { name: "Ritz Paris", stars: 5, location: "15 Place Vendôme", image: "https://images.unsplash.com/photo-1560920452-aa6406324e75?auto=format&fit=crop&q=80&w=800" },
       { name: "Hôtel Plaza Athénée", stars: 5, location: "25 Avenue Montaigne", image: "https://images.unsplash.com/photo-1551635586-096503ad9e8b?auto=format&fit=crop&q=80&w=800" },
-      { name: "Pullman Paris Tour Eiffel", stars: 4, location: "18 Avenue De Suffren", image: "https://images.unsplash.com/photo-1499916078039-922301b0eb9b?auto=format&fit=crop&q=80&w=800" }
+      { name: "Pullman Paris Tour Eiffel", stars: 4, location: "18 Avenue De Suffren", image: "https://images.unsplash.com/photo-1499916078039-922301b0eb9b?auto=format&fit=crop&q=80&w=800" },
+      { name: "Le Meurice", stars: 5, location: "228 Rue de Rivoli", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" },
+      { name: "Four Seasons Hotel George V", stars: 5, location: "31 Avenue George V", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
+      { name: "Shangri-La Paris", stars: 5, location: "10 Avenue d'Iéna", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Peninsula Paris", stars: 5, location: "19 Avenue Kléber", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" },
+      { name: "Mandarin Oriental, Paris", stars: 5, location: "251 Rue Saint-Honoré", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" },
+      { name: "Hôtel de Crillon", stars: 5, location: "10 Place de la Concorde", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" },
+      { name: "Park Hyatt Paris-Vendôme", stars: 5, location: "5 Rue de la Paix", image: "https://images.unsplash.com/photo-1551882547-ff43c33ff783?auto=format&fit=crop&q=80&w=800" }
     ],
     'DXB': [
       { name: "Burj Al Arab Jumeirah", stars: 7, location: "Jumeirah St, Dubai", image: "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&q=80&w=800" },
       { name: "Atlantis, The Palm", stars: 5, location: "Crescent Rd, Dubai", image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800" },
-      { name: "Jumeirah Beach Hotel", stars: 5, location: "Jumeirah St, Dubai", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800" }
+      { name: "Jumeirah Beach Hotel", stars: 5, location: "Jumeirah St, Dubai", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800" },
+      { name: "Armani Hotel Dubai", stars: 5, location: "Burj Khalifa, Downtown", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" },
+      { name: "Address Downtown", stars: 5, location: "Sheikh Mohammed bin Rashid Blvd", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Ritz-Carlton, Dubai", stars: 5, location: "The Walk, JBR", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Four Seasons Resort Dubai", stars: 5, location: "Jumeirah Beach Rd", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" },
+      { name: "Palazzo Versace Dubai", stars: 5, location: "Jaddaf Waterfront", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" },
+      { name: "Raffles Dubai", stars: 5, location: "Sheikh Rashid Rd", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" },
+      { name: "JW Marriott Marquis Hotel", stars: 5, location: "Business Bay", image: "https://images.unsplash.com/photo-1551882547-ff43c33ff783?auto=format&fit=crop&q=80&w=800" }
     ],
     'NYC': [
       { name: "The Plaza", stars: 5, location: "5th Avenue at Central Park South", image: "https://images.unsplash.com/photo-1562133567-b6a0a9c7e6eb?auto=format&fit=crop&q=80&w=800" },
       { name: "New York Marriott Marquis", stars: 4, location: "1535 Broadway", image: "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?auto=format&fit=crop&q=80&w=800" },
-      { name: "1 Hotel Brooklyn Bridge", stars: 5, location: "60 Furman St, Brooklyn", image: "https://images.unsplash.com/photo-1512918760513-95f1fde64283?auto=format&fit=crop&q=80&w=800" }
+      { name: "1 Hotel Brooklyn Bridge", stars: 5, location: "60 Furman St, Brooklyn", image: "https://images.unsplash.com/photo-1512918760513-95f1fde64283?auto=format&fit=crop&q=80&w=800" },
+      { name: "The St. Regis New York", stars: 5, location: "Two E 55th St", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" },
+      { name: "Mandarin Oriental, New York", stars: 5, location: "80 Columbus Circle", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
+      { name: "Baccarat Hotel New York", stars: 5, location: "28 W 53rd St", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Park Hyatt New York", stars: 5, location: "153 W 57th St", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" },
+      { name: "Four Seasons Hotel New York", stars: 5, location: "57 E 57th St", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Knickerbocker Hotel", stars: 5, location: "6 Times Square", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" },
+      { name: "Equinox Hotel Hudson Yards", stars: 5, location: "33 Hudson Yards", image: "https://images.unsplash.com/photo-1551882547-ff43c33ff783?auto=format&fit=crop&q=80&w=800" }
     ],
     'SIN': [
-      { name: "Marina Bay Sands", stars: 5, location: "10 Bayfront Ave", image: "https://images.unsplash.com/photo-1565031491338-45f96c67b376?auto=format&fit=crop&q=80&w=800" }, // Using a generic luxury look for demo
+      { name: "Marina Bay Sands", stars: 5, location: "10 Bayfront Ave", image: "https://images.unsplash.com/photo-1565031491338-45f96c67b376?auto=format&fit=crop&q=80&w=800" },
       { name: "Raffles Singapore", stars: 5, location: "1 Beach Rd", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
-      { name: "The Fullerton Hotel", stars: 5, location: "1 Fullerton Square", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" }
+      { name: "The Fullerton Hotel", stars: 5, location: "1 Fullerton Square", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Capella Singapore", stars: 5, location: "1 The Knolls, Sentosa", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" },
+      { name: "The Ritz-Carlton Millenia", stars: 5, location: "7 Raffles Ave", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
+      { name: "Parkroyal Collection Pickering", stars: 5, location: "3 Upper Pickering St", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Grand Hyatt Singapore", stars: 5, location: "10 Scotts Rd", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" },
+      { name: "Shangri-La Singapore", stars: 5, location: "22 Orange Grove Rd", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" },
+      { name: "InterContinental Singapore", stars: 5, location: "80 Middle Rd", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" },
+      { name: "Fairmont Singapore", stars: 5, location: "80 Bras Basah Rd", image: "https://images.unsplash.com/photo-1551882547-ff43c33ff783?auto=format&fit=crop&q=80&w=800" }
     ],
     'NBO': [
       { name: "Giraffe Manor", stars: 5, location: "Gogo Falls Road, Nairobi", image: "https://images.unsplash.com/photo-1493246318656-5bbd4afb2978?auto=format&fit=crop&q=80&w=800" },
       { name: "Fairmont The Norfolk", stars: 5, location: "Harry Thuku Rd", image: "https://images.unsplash.com/photo-1565039352829-378341259654?auto=format&fit=crop&q=80&w=800" },
-      { name: "Villa Rosa Kempinski", stars: 5, location: "Chiromo Rd, Nairobi", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" }
+      { name: "Villa Rosa Kempinski", stars: 5, location: "Chiromo Rd, Nairobi", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Tribe Hotel", stars: 5, location: "Gigiri, Nairobi", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" },
+      { name: "Hemingways Nairobi", stars: 5, location: "Karen, Nairobi", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800" },
+      { name: "Sarova Stanley", stars: 5, location: "Kenyatta Ave", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" },
+      { name: "Ole-Sereni Hotel", stars: 5, location: "Mombasa Rd", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800" },
+      { name: "Radisson Blu Hotel", stars: 5, location: "Upper Hill", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" },
+      { name: "Sankara Nairobi", stars: 5, location: "Woodvale Grove", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" },
+      { name: "Crowne Plaza Nairobi Airport", stars: 5, location: "First Freight Lane", image: "https://images.unsplash.com/photo-1551882547-ff43c33ff783?auto=format&fit=crop&q=80&w=800" }
     ],
     'TYO': [
       { name: "Park Hyatt Tokyo", stars: 5, location: "Shinjuku City, Tokyo", image: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=800" },

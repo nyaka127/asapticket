@@ -29,11 +29,11 @@ export function generateQuoteEmailHtml(type: 'FLIGHT' | 'HOTEL' | 'CAR', title: 
       <p>Kind Regards,</p>
       <p><strong>Lupin.M | Advisor</strong></p>
       <p>Phone: +866 961 7260<br />
-      E-mail: <a href="mailto:Lupin.m@asaptickets.com">Lupin.m@asaptickets.com</a></p>
+      E-mail: <a href="mailto:Lupin.m@asapticketsbooking.com">Lupin.m@asapticketsbooking.com</a></p>
       
       <p>
         <strong>ASAP Tickets is rated "Excellent"</strong><br />
-        <a href="https://www.asaptickets.com/reviews" target="_blank" style="color: #0056b3;">trustpilot</a>
+        <a href="https://www.asapticketsbooking.com/reviews" target="_blank" style="color: #0056b3;">trustpilot</a>
       </p>
       <p><em>Gold Medal, Customer Service, Travel<br />asap businessawards</em></p>
       

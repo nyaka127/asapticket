@@ -18,3 +18,8 @@ dev.db
 
 # VS Code
 .vscode/
+ 
+# Ignored logic files
+cloudflared.exe
+*.log
+tmp/

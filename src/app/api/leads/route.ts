@@ -10,7 +10,8 @@ export async function POST(request: Request) {
       departureDate, returnDate, 
       cabin, flightId, 
       deposit, seats,
-      price 
+      price,
+      selectedHotel, selectedCar, selectedTour
     } = body;
 
     const lead = await prisma.lead.create({

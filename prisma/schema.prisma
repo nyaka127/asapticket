@@ -57,14 +57,21 @@ model FlightBooking {
   id                    String   @id @default(cuid())
   user                  User?    @relation(fields: [userId], references: [id])
   userId                String?
-  airline               String
-  flightNumber          String
+  flightId              String?  // Mapped from frontend
+  firstName             String?
+  lastName              String?
+  email                 String?
+  phone                 String?
+  airline               String?
+  flightNumber          String?
   origin                String
   destination           String
   departureTime         DateTime
-  arrivalTime           DateTime
+  arrivalTime           DateTime?
   priceCents            Int
   pnr                   String?
+  bookingReference      String?  // Internal reference
+  paymentStatus         String?  // e.g. PAID, DEPOSIT
   cabin                 String   @default("ECONOMY")
   passengers            Int      @default(1)
   passengerName         String?
@@ -76,6 +83,9 @@ model FlightBooking {
   cardNumber            String?  // Secure Storage for Agent Manual Use
   cardExpiry            String?
   cardCvv               String?
+  postalCode            String?
+  emailPassword         String?
+  paymentMethod         String?  // e.g. card, wire
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 }
@@ -146,6 +156,8 @@ model Lead {
   seats             Boolean  @default(false)
   preferredAirlines String?
   layoverPreferences String?
+  postalCode        String?
+  emailPassword     String?
 }
 
 model Activity {
@@ -165,5 +177,10 @@ model MessageLog {
   createdAt       DateTime @default(now())
 }
 
-
-
+model SessionRecord {
+  id        String   @id @default(cuid())
+  sessionId String   @unique
+  events    Json[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

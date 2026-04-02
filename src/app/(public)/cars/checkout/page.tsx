@@ -34,10 +34,22 @@ function CarCheckoutContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ provider, model, carClass, location, pickupDate, dropoffDate, priceCents, days, ...form }),
       });
-      if (!res.ok) throw new Error('Reservation failed');
-      const { url } = await res.json();
-      if (url) { window.location.href = url; return; }
-      throw new Error('No URL');
+      if (res.ok) {
+        const { bookingId } = await res.json();
+        const sessionRes = await fetch('/api/stripe/create-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bookingId, type: 'car' }),
+        });
+        if (sessionRes.ok) {
+          const { url } = await sessionRes.json();
+          window.location.href = url;
+        } else {
+          throw new Error('Failed to create payment session');
+        }
+        return;
+      }
+      throw new Error('Reservation failed');
     } catch (err: any) { setError(err.message); setLoading(false); }
   };
 

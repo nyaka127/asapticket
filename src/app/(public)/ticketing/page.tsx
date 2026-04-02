@@ -1,14 +1,10 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { GlobalPublicHeader } from '@/components/GlobalPublicHeader';
-import { GlobalPublicFooter } from '@/components/GlobalPublicFooter';
 
 export default function TicketingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center">
-      <GlobalPublicHeader />
-      
       <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-20 flex flex-col items-center">
         <div className="text-center mb-16 animate-in fade-in slide-in-from-top-4 duration-1000">
           <span className="bg-brand-secondary/20 text-brand-secondary font-black text-[10px] px-4 py-1.5 rounded-full uppercase tracking-[0.3em] mb-6 inline-block border border-brand-secondary/30">
@@ -83,8 +79,6 @@ export default function TicketingPage() {
           </div>
         </div>
       </main>
-
-      <GlobalPublicFooter />
     </div>
   );
 }

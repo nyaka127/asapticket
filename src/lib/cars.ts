@@ -74,36 +74,100 @@ export const searchCars = async (params: CarSearchStartParameters) => {
   // Add Rental Agency Options for "Car Rental Service"
   const rentals = [
     {
-      id: `rental-${pickup}-hertz`,
-      agency: "Terminal Dispatch",
+      id: `rental-${pickup}-sixt-luxury`,
+      agency: "Sixt Platinum",
       provider: "LOCAL_V2",
       car: {
-        brand: "Standard Sedan",
-        type: "Toyota Camry or Similar",
-        passengers: 5,
-        bags: 4,
-        image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800",
+        brand: "Mercedes-Benz S-Class",
+        type: "Luxury Sedan",
+        passengers: 4,
+        bags: 3,
+        image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800",
         transmission: "automatic",
-        fuel: "Electric / Petrol"
+        fuel: "Petrol / Hybrid"
       },
-      priceTotal: calculateClientPrice(taxiType.baseFare + 15.00, 1.05),
-      badges: ["Instant Curb", "Best Price", "Unlimited KM"]
+      priceTotal: calculateClientPrice(taxiType.baseFare + 145.00, 1.05),
+      badges: ["Chauffeur Available", "First Class Experience", "GPS Included"]
     },
     {
-      id: `rental-${pickup}-avis`,
-      agency: "Curb Express",
+      id: `rental-${pickup}-hertz-suv`,
+      agency: "Hertz Gold",
       provider: "LOCAL_V2",
       car: {
-        brand: "City Van Large",
-        type: "Ford Transit or Similar",
-        passengers: 7,
-        bags: 6,
+        brand: "Range Rover Velar",
+        type: "Premium SUV",
+        passengers: 5,
+        bags: 5,
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800",
         transmission: "automatic",
         fuel: "Diesel / Hybrid"
       },
-      priceTotal: calculateClientPrice(taxiType.baseFare + 25.00, 1.05),
-      badges: ["High Clearance", "GPS Included", "Fuel Efficient"]
+      priceTotal: calculateClientPrice(taxiType.baseFare + 115.00, 1.05),
+      badges: ["4x4 Drive", "High Clearance", "Unlimited KM"]
+    },
+    {
+      id: `rental-${pickup}-avis-ev`,
+      agency: "Avis Electric",
+      provider: "LOCAL_V2",
+      car: {
+        brand: "Tesla Model 3",
+        type: "Luxury EV",
+        passengers: 5,
+        bags: 3,
+        image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=800",
+        transmission: "automatic",
+        fuel: "Pure Electric"
+      },
+      priceTotal: calculateClientPrice(taxiType.baseFare + 85.00, 1.05),
+      badges: ["Autopilot Ready", "Supercharging", "Eco-Friendly"]
+    },
+    {
+      id: `rental-${pickup}-enterprise-std`,
+      agency: "Enterprise Choice",
+      provider: "LOCAL_V2",
+      car: {
+        brand: "Toyota Camry",
+        type: "Standard Sedan",
+        passengers: 5,
+        bags: 4,
+        image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800",
+        transmission: "automatic",
+        fuel: "Petrol"
+      },
+      priceTotal: calculateClientPrice(taxiType.baseFare + 45.00, 1.05),
+      badges: ["Reliable Choice", "Fuel Efficient", "Daily Wash"]
+    },
+    {
+      id: `rental-${pickup}-exotic-sport`,
+      agency: "Exotic Drive",
+      provider: "LOCAL_V2",
+      car: {
+        brand: "Porsche 911 Carrera",
+        type: "Luxury Sport",
+        passengers: 2,
+        bags: 1,
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800",
+        transmission: "automatic",
+        fuel: "Petrol"
+      },
+      priceTotal: calculateClientPrice(taxiType.baseFare + 295.00, 1.05),
+      badges: ["High Performance", "Head Turner", "Limited Selection"]
+    },
+    {
+      id: `rental-${pickup}-budget-van`,
+      agency: "Budget Family",
+      provider: "LOCAL_V2",
+      car: {
+        brand: "Chrysler Pacifica",
+        type: "Luxury Minivan",
+        passengers: 7,
+        bags: 6,
+        image: "https://images.unsplash.com/photo-1517524008436-bbdb03ac4ca3?auto=format&fit=crop&q=80&w=800",
+        transmission: "automatic",
+        fuel: "Hybrid / Petrol"
+      },
+      priceTotal: calculateClientPrice(taxiType.baseFare + 95.00, 1.05),
+      badges: ["Family Friendly", "Large Capacity", "Slide Doors"]
     }
   ];
 

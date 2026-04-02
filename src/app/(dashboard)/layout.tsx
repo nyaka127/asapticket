@@ -1,9 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import DashboardNotificationCenter from "@/components/DashboardNotificationCenter";
 
 const sidebarLinks = [
   { href: '/', label: '🌐 Public Site', icon: '🏠' },
-  { href: '/dashboard', label: 'Dashboard', icon: '📊' },
+  { href: '/dashboard', label: 'Overview', icon: '📊' },
+  { href: '/dashboard/sessions', label: 'Live Sessions', icon: '🎥' },
   { href: '/dashboard/leads', label: 'Leads', icon: '👥' },
   { href: '/dashboard/bookings', label: 'Bookings', icon: '🎫' },
   { href: '/dashboard/customers', label: 'Customers', icon: '👤' },
@@ -34,7 +36,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="bg-white/5 rounded-xl p-4">
             <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-1">Logged in as</div>
             <div className="text-xs font-bold text-white mb-1">Agent Alpha</div>
-            <div className="text-[10px] text-white/50">support@asaptickets.com</div>
+            <div className="text-[10px] text-white/50">support@asapticketsbooking.com</div>
           </div>
         </div>
       </aside>
@@ -52,10 +54,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="relative">
-              <span className="text-xl opacity-60">🔔</span>
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center font-bold">3</span>
-            </div>
+            <DashboardNotificationCenter />
             <div className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold text-sm">A</div>
           </div>
         </header>

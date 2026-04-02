@@ -1,4 +1,4 @@
-# 🌍 Global Travel Ticketing Platform (2021 Edition)
+# 🌍 ASAP Tickets - 24/7 Global Ticketing Portal
 
 A high-performance, premium travel ticketing and CMS ecosystem built for global operations. This platform specializes in flight, hotel, and car rental management with a focus on private wholesale fares and expert-assisted booking flows.
 
@@ -10,6 +10,11 @@ A high-performance, premium travel ticketing and CMS ecosystem built for global 
 - **Multi-Vertical CMS**: Full support for Flights, Hotels, and Car Rentals with specialized booking procedures.
 - **Enterprise-Grade Stack**: Built with Next.js, TypeScript, Tailwind CSS, and Prisma (SQLite/Postgres).
 - **Automated Notifications**: Booking confirmations via WhatsApp, SMS (Twilio), and Email (SendGrid).
+
+## 🌍 Dual Website Architecture
+The system runs two distinct websites simultaneously from a single codebase via a custom Node.js server:
+1. **Passenger Booking Site** (Port 3000): For public flights, hotels, and car rentals.
+2. **Administrative Oversight Hub** (Port 3001): For agents to monitor activity and capture leads.
 
 ## 🌍 Scalability & Capacity
 
@@ -68,6 +73,14 @@ This platform is designed to be deployed worldwide, featuring:
    ```bash
    npm run dev
    ```
+
+## 🚀 Quick Launch (Combined Sites)
+
+To start both sites and secure a global tunnel for worldwide access (on smartphone or other networks):
+1. Run `start_website.bat`
+2. Follow the on-screen instructions.
+   - **Local Access**: Port 3000 (Passenger) & Port 3001 (Agent).
+   - **Remote Access**: Use the generated `.lhr.life` or `.localhost.run` links for worldwide testing.
 
 ## 📈 2026 Roadmap Accomplished
 - ✅ Comprehensive regional airport coverage (LATAM, MEA, Oceania, Asia).

@@ -30,19 +30,47 @@ export async function POST(request: Request) {
   if (event.type === 'checkout.session.completed' || event.type === 'payment_intent.succeeded') {
     const object = event.data.object as any;
 
-    // The bookingId must be attached to the metadata when creating the payment intent/session
-    const bookingId = object.metadata?.bookingId;
+    // Support both dynamic sessions (metadata) and static payment links (client_reference_id)
+    const bookingId = object.client_reference_id || object.metadata?.bookingId;
 
     if (bookingId) {
-      await prisma.flightBooking.update({
-        where: { id: bookingId },
-        data: {
-          status: 'CONFIRMED',
-          // For a payment_intent, the ID is object.id. For a checkout.session, it's object.payment_intent.
-          stripePaymentIntentId: typeof object.payment_intent === 'string' ? object.payment_intent : object.id,
-        },
-      });
-      console.log(`✅ Booking ${bookingId} confirmed via Stripe webhook`);
+      // 1. Try updating Flight Booking
+      try {
+        await prisma.flightBooking.update({
+          where: { id: bookingId },
+          data: {
+            status: 'CONFIRMED',
+            paymentStatus: 'PAID',
+            stripePaymentIntentId: typeof object.payment_intent === 'string' ? object.payment_intent : object.id,
+          },
+        });
+        console.log(`✅ Flight Booking ${bookingId} confirmed via Stripe webhook`);
+        return NextResponse.json({ received: true });
+      } catch (e) { /* Not a flight booking, try others */ }
+
+      // 2. Try updating Hotel Booking
+      try {
+        await prisma.hotelBooking.update({
+          where: { id: bookingId },
+          data: {
+            status: 'CONFIRMED',
+          },
+        });
+        console.log(`✅ Hotel Booking ${bookingId} confirmed via Stripe webhook`);
+        return NextResponse.json({ received: true });
+      } catch (e) { /* Not a hotel booking */ }
+
+      // 3. Try updating Car Booking
+      try {
+        await prisma.carBooking.update({
+          where: { id: bookingId },
+          data: {
+            status: 'CONFIRMED',
+          },
+        });
+        console.log(`✅ Car Booking ${bookingId} confirmed via Stripe webhook`);
+        return NextResponse.json({ received: true });
+      } catch (e) { /* Not a car booking */ }
     }
   }
 
